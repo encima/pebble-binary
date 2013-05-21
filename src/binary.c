@@ -35,11 +35,11 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t) {
   (void)t;
   (void)ctx;
 
-  static char months[] =  "    0000 month";
-  static char days[] =    "  00000 day";
-  static char hours[] =   "    0000 hour";
-  static char minutes[] = "000000 min";
-  static char seconds[] = "000000 sec";
+  static char months[] =  "    0000 m";
+  static char days[] =    "  00000 d";
+  static char hours[] =   "   00000 h";
+  static char minutes[] = "000000 m";
+  static char seconds[] = "000000 s";
 
   PblTm currentTime;
 
