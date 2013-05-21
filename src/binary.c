@@ -19,7 +19,7 @@ TextLayer hourLayer;
 TextLayer minuteLayer;
 TextLayer secondLayer;
 
-void binaryize(int num, int len, char *str)
+void binarize(int num, int len, char *str)
 {
   int mask = 0x1;
   str += len-1;
@@ -35,21 +35,21 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t) {
   (void)t;
   (void)ctx;
 
-  static char months[] =  "    0000 month";
-  static char days[] =    "  00000 day";
-  static char hours[] =   "    0000 hour";
-  static char minutes[] = "000000 min";
-  static char seconds[] = "000000 sec";
+  static char months[] =  "0000 M";
+  static char days[] =    "00000 D";
+  static char hours[] =   "00000  H";
+  static char minutes[] = "000000 Mi";
+  static char seconds[] = "000000 S";
 
   PblTm currentTime;
 
   get_time(&currentTime);
 
-  binaryize(currentTime.tm_mon, 4, months+4);
-  binaryize(currentTime.tm_mday, 5, days+2);
-  binaryize(currentTime.tm_hour, 4, hours+4);
-  binaryize(currentTime.tm_min, 6, minutes);
-  binaryize(currentTime.tm_sec, 6, seconds);
+  binarize(currentTime.tm_mon+1, 4, months);
+  binarize(currentTime.tm_mday, 5, days);
+  binarize(currentTime.tm_hour, 5, hours);
+  binarize(currentTime.tm_min, 6, minutes);
+  binarize(currentTime.tm_sec, 6, seconds);
 
   text_layer_set_text(&monthLayer, months);
   text_layer_set_text(&dayLayer, days);
