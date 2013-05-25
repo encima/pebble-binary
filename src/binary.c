@@ -35,20 +35,20 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *t) {
   (void)t;
   (void)ctx;
 
-  static char months[] =  "0000 M";
-  static char days[] =    "00000 D";
-  static char hours[] =   "00000  H";
-  static char minutes[] = "000000 Mi";
-  static char seconds[] = "000000 S";
+  static char months[] =  "0000 M  ";
+  static char days[] =    "00000 D  ";
+  static char hours[] =   "00000 H  ";
+  static char minutes[] = "000000 Mi  ";
+  static char seconds[] = "000000 S  ";
 
   PblTm currentTime;
 
   get_time(&currentTime);
-
+  
   binarize(currentTime.tm_mon+1, 4, months);
   binarize(currentTime.tm_mday, 5, days);
   binarize(currentTime.tm_hour, 5, hours);
-  binarize(currentTime.tm_min, 6, minutes);
+  if(currentTime.tm_sec == 0) binarize(currentTime.tm_min, 6, minutes);
   binarize(currentTime.tm_sec, 6, seconds);
 
   text_layer_set_text(&monthLayer, months);
@@ -64,6 +64,7 @@ void initLayer(TextLayer * layer, GRect grect) {
   text_layer_init(layer, window.layer.frame);
   text_layer_set_text_color(layer, GColorWhite);
   text_layer_set_background_color(layer, GColorClear);
+  text_layer_set_text_alignment(layer, GTextAlignmentRight);
   layer_set_frame(&(*layer).layer, grect);
   text_layer_set_font(layer, fonts_get_system_font(FONT_CHOICE));
   layer_add_child(&window.layer, &(*layer).layer);
